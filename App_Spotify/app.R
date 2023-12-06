@@ -44,9 +44,13 @@ server <- function(input, output, session) {
   
   spotify_2000_2023 <- read.csv("C:/Users/Fabi Hidalgo/Desktop/CETAV/programacion I/mi_primer_repo/datos/spotify_2000_2023.csv", sep=";")
   
-  updateSelectInput(session, "año", 
-                    choices = unique(spotify_2000_2023$year))
+  order_years <- sort(unique(spotify_2000_2023$year), decreasing = TRUE)
   
+  observe({
+    updateSelectInput(session, "año", 
+                      choices = order_years)
+  })
+
   observe({
     updateSelectInput(session, "genero", 
                       choices = unique(spotify_2000_2023$top.genre))
@@ -96,3 +100,5 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
+
+
